@@ -1,0 +1,24 @@
+name: "docker-publish-action"
+description: "Publishes an image to Docker Hub"
+inputs:
+  docker-image:
+    description: "name of the image (example: fsouza/fake-gcs-server)"
+    required: true
+  docker-username:
+    description: "Username to authenticate with Docker Hub"
+    required: true
+  docker-password:
+    description: "Password to authenticate with Docker Hub"
+    required: true
+  skip-push:
+    description: "Whether to skip push (useful for pull-requests, to test the image building process)"
+    required: false
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - run:
+      shell: bash
+    - run: ${{ github.action_path }}/docker-build.sh
+      shell: bash
