@@ -26,21 +26,21 @@ function additional_tags() {
 		tags="${filtered} ${filtered%.*} ${filtered%%.*}"
 
 		for tag in $tags; do
-			docker tag "${IMAGE_NAME}:${original_tag} ${IMAGE_NAME}:${tag}"
+			docker tag "${DOCKER_IMAGE}:${original_tag} ${DOCKER_IMAGE}:${tag}"
 		done
 	fi
 }
 
 tag=$(pick_tag)
-docker build -t "${IMAGE_NAME}:${tag}" -f "${DOCKERFILE}" .
+docker build -t "${DOCKER_IMAGE}:${tag}" -f "${DOCKERFILE}" .
 additional_tags "${tag}"
 
 if [[ ${SKIP_PUSH} != "true" ]]; then
 	docker login -u "${DOCKER_USERNAME}" --password-stdin <<<"${DOCKER_PASSWORD}"
-	docker push --all-tags "${IMAGE_NAME}"
+	docker push --all-tags "${DOCKER_IMAGE}"
 
 	docker system prune -af
 
 	# sanity check
-	docker pull "${IMAGE_NAME}:${tag}"
+	docker pull "${DOCKER_IMAGE}:${tag}"
 fi
