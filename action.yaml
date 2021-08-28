@@ -6,10 +6,10 @@ inputs:
     required: true
   docker-username:
     description: "Username to authenticate with Docker Hub"
-    required: true
+    required: false
   docker-password:
     description: "Password to authenticate with Docker Hub"
-    required: true
+    required: false
   skip-push:
     description: "Whether to skip push (useful for pull-requests, to test the image building process)"
     required: false
@@ -18,7 +18,5 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - run:
-      shell: bash
-    - run: ${{ github.action_path }}/docker-build.sh
+    - run: docker info
       shell: bash
