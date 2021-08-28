@@ -14,9 +14,19 @@ inputs:
     description: "Whether to skip push (useful for pull-requests, to test the image building process)"
     required: false
     default: "false"
+  dockerfile:
+    description: "Path to the dockerfile (defaults to Dockerfile)"
+    required: false
+    default: "Dockerfile"
 
 runs:
   using: "composite"
   steps:
-    - run: docker info
+    - run: ${{ github.action_path }}/docker-build.sh
       shell: bash
+      env:
+        DOCKERFILE: ${{ input.dockerfile }}
+        DOCKER_IMAGE: ${{ inputs.docker-image }}
+        DOCKER_PASSWORD: ${{ input.docker-password }}
+        DOCKER_USERNAME: ${{ input.docker-username }}
+        SKIP_PUSH: ${{ input.skip-push }}

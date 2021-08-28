@@ -21,4 +21,5 @@ jobs:
       - uses: ./
         with:
           docker-image: fsouza/fake-gcs-server
+          dockerfile: tests/Dockerfile
           skip-push: true
