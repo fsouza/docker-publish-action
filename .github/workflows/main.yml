@@ -23,8 +23,18 @@ jobs:
 
       - run: shellcheck docker-build.sh
 
-      - uses: ./
+      - name: test build
+        uses: ./
         with:
-          docker-image: fsouza/fake-gcs-server
           dockerfile: tests/Dockerfile
+          docker-image: fsouzaci/docker-publish-action-test
           skip-push: true
+
+      - name: test push
+        if: github.event_name == 'push'
+        uses: ./
+        with:
+          dockerfile: tests/Dockerfile
+          docker-image: fsouzaci/docker-publish-action-test
+          docker-username: ${{ secrets.DOCKER_USERNAME }}
+          docker-password: ${{ secrets.DOCKER_PASSWORD }}
