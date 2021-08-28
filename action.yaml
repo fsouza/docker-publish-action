@@ -25,8 +25,8 @@ runs:
     - run: ${{ github.action_path }}/docker-build.sh
       shell: bash
       env:
-        DOCKERFILE: ${{ input.dockerfile }}
+        DOCKERFILE: ${{ inputs.dockerfile }}
         DOCKER_IMAGE: ${{ inputs.docker-image }}
-        DOCKER_PASSWORD: ${{ input.docker-password }}
-        DOCKER_USERNAME: ${{ input.docker-username }}
-        SKIP_PUSH: ${{ input.skip-push }}
+        DOCKER_PASSWORD: ${{ inputs.docker-password }}
+        DOCKER_USERNAME: ${{ inputs.docker-username }}
+        SKIP_PUSH: ${{ inputs.skip-push }}
