@@ -31,6 +31,8 @@ function additional_tags() {
 	fi
 }
 
+validate
+
 tag=$(pick_tag)
 docker build -t "${DOCKER_IMAGE}:${tag}" -f "${DOCKERFILE}" .
 additional_tags "${tag}"
