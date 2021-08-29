@@ -28,7 +28,7 @@ function additional_tags() {
 	bash --version
 	set -x
 	original_tag=$1
-	if grep -q '^v\d\+\.\d\+\.\d\+$' <<<"${original_tag}"; then
+	if grep -qE '^v[0-9]+\.[0-9]+\.[0-9]+$' <<<"${original_tag}"; then
 		filtered=${original_tag#v}
 		tags=("${filtered}" "${filtered%.*}" "${filtered%%.*}")
 
