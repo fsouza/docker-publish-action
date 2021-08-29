@@ -25,15 +25,18 @@ function pick_tag() {
 }
 
 function additional_tags() {
+	bash --version
+	set -x
 	original_tag=$1
-	if grep -q '^v\d\+\.\d\+\.\d\+$' <<<"${original_tag}"; then
+	if grep -qE '^v[0-9]+\.[0-9]+\.[0-9]+$' <<<"${original_tag}"; then
 		filtered=${original_tag#v}
 		tags=("${filtered}" "${filtered%.*}" "${filtered%%.*}")
 
 		for tag in "${tags[@]}"; do
-			docker tag "${DOCKER_IMAGE}:${original_tag} ${DOCKER_IMAGE}:${tag}"
+			docker tag "${DOCKER_IMAGE}:${original_tag}" "${DOCKER_IMAGE}:${tag}"
 		done
 	fi
+	set +x
 }
 
 validate
