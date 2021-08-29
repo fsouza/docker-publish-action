@@ -44,5 +44,5 @@ jobs:
         with:
           dockerfile: tests/Dockerfile
           docker-image: fsouzaci/docker-publish-action-test
-          docker-username: ${{ secrets.DOCKER_USERNAME }}
+          docker-username: fsouzaci
           docker-password: ${{ secrets.DOCKER_PASSWORD }}
