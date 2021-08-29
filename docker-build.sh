@@ -28,9 +28,9 @@ function additional_tags() {
 	original_tag=$1
 	if grep -q '^v\d\+\.\d\+\.\d\+$' <<<"${original_tag}"; then
 		filtered=${original_tag#v}
-		tags="${filtered} ${filtered%.*} ${filtered%%.*}"
+		tags=("${filtered}" "${filtered%.*}" "${filtered%%.*}")
 
-		for tag in $tags; do
+		for tag in "${tags[@]}"; do
 			docker tag "${DOCKER_IMAGE}:${original_tag} ${DOCKER_IMAGE}:${tag}"
 		done
 	fi
