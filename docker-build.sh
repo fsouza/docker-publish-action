@@ -26,7 +26,6 @@ function pick_tag() {
 
 function additional_tags() {
 	bash --version
-	printenv | grep ^BASH
 	set -x
 	original_tag=$1
 	if grep -q '^v\d\+\.\d\+\.\d\+$' <<<"${original_tag}"; then
