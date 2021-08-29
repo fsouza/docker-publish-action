@@ -18,6 +18,10 @@ inputs:
     description: "Path to the dockerfile (defaults to Dockerfile)"
     required: false
     default: "Dockerfile"
+  tag:
+    description: "Additional tag on top of 'latest'. Can be inferred from git if used on the correct event"
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -30,3 +34,4 @@ runs:
         DOCKER_PASSWORD: ${{ inputs.docker-password }}
         DOCKER_USERNAME: ${{ inputs.docker-username }}
         SKIP_PUSH: ${{ inputs.skip-push }}
+        TAG: ${{ inputs.tag }}

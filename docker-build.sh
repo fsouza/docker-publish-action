@@ -12,6 +12,11 @@ function validate() {
 }
 
 function pick_tag() {
+	if [ -n "${TAG}" ]; then
+		echo "${TAG}"
+		return 0
+	fi
+
 	tag=latest
 	if [ "${GITHUB_REF##refs/tags/}" != "${GITHUB_REF}" ]; then
 		tag=${GITHUB_REF##refs/tags/}
@@ -21,7 +26,7 @@ function pick_tag() {
 
 function additional_tags() {
 	original_tag=$1
-	if echo "$original_tag" | grep -q '^v\d\+\.\d\+\.\d\+$'; then
+	if grep -q '^v\d\+\.\d\+\.\d\+$' <<<"${original_tag}"; then
 		filtered=${original_tag#v}
 		tags="${filtered} ${filtered%.*} ${filtered%%.*}"
 

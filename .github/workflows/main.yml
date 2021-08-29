@@ -30,6 +30,14 @@ jobs:
           docker-image: fsouzaci/docker-publish-action-test
           skip-push: true
 
+      - name: test tagging
+        uses: ./
+        with:
+          dockerfile: tests/Dockerfile
+          docker-image: fsouzaci/docker-publish-action-test
+          tag: v1.0.0
+          skip-push: true
+
       - name: test push
         if: github.event_name == 'push'
         uses: ./
