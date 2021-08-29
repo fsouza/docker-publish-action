@@ -33,7 +33,7 @@ function additional_tags() {
 		tags=("${filtered}" "${filtered%.*}" "${filtered%%.*}")
 
 		for tag in "${tags[@]}"; do
-			docker tag "${DOCKER_IMAGE}:${original_tag} ${DOCKER_IMAGE}:${tag}"
+			docker tag "${DOCKER_IMAGE}:${original_tag}" "${DOCKER_IMAGE}:${tag}"
 		done
 	fi
 	set +x
