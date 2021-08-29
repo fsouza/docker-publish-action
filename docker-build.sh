@@ -25,6 +25,7 @@ function pick_tag() {
 }
 
 function additional_tags() {
+	set -x
 	original_tag=$1
 	if grep -q '^v\d\+\.\d\+\.\d\+$' <<<"${original_tag}"; then
 		filtered=${original_tag#v}
@@ -34,6 +35,7 @@ function additional_tags() {
 			docker tag "${DOCKER_IMAGE}:${original_tag} ${DOCKER_IMAGE}:${tag}"
 		done
 	fi
+	set +x
 }
 
 validate
