@@ -43,7 +43,7 @@ docker build -t "${DOCKER_IMAGE}:${tag}" -f "${DOCKERFILE}" .
 additional_tags "${tag}"
 
 if [[ ${SKIP_PUSH} != "true" ]]; then
-	docker login -u "${DOCKER_USERNAME}" --password-stdin <<<"${DOCKER_PASSWORD}"
+	docker login --username "${DOCKER_USERNAME}" --password-stdin <<<"${DOCKER_PASSWORD}"
 	docker push --all-tags "${DOCKER_IMAGE}"
 
 	docker system prune -af
