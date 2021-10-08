@@ -32,7 +32,7 @@ jobs:
           docker-password: ${{ secrets.DOCKER_PASSWORD }}
 ```
 
-(yes, this action requires `os.runner` to be Linux)
+Note: this action requires `os.runner` to be Linux.
 
 ## Does it support other registries?
 
