@@ -20,7 +20,7 @@ on: [push]
 jobs:
   publish-to-docker-hub:
     runs-on: ubuntu-latest
-    name: Publiches an image to Docker Hub
+    name: Publishes an image to Docker Hub
     steps:
       - uses: actions/checkout@v2
 
