@@ -16,6 +16,8 @@ jobs:
     name: test-push
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2.4.0
+
       - name: test push
         if: github.event_name == 'push'
         uses: ./
