@@ -1,8 +1,9 @@
 # docker-publish-action
 
 This repository contains a composite GitHub action for publishing images to
-Docker Hub. It's basically a generalization of a script that I used to
-replicate across different repositories.
+Docker Hub, building both amd64 and arm64 images. It's basically a
+generalization of a script that I used to replicate across different
+repositories.
 
 ## How to use it
 
@@ -33,8 +34,3 @@ jobs:
 ```
 
 Note: this action requires `os.runner` to be Linux.
-
-## Does it support other registries?
-
-No, but I'm up to adding it, but let's not make this too complicated. It's
-shell script after all.

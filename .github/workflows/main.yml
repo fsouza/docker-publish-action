@@ -12,50 +12,10 @@ on:
       - main
 
 jobs:
-  shellcheck:
-    name: Test the action
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2.3.4
-
-      - name: install shellcheck
-        run: sudo apt-get update && sudo apt-get install -y shellcheck
-
-      - run: shellcheck docker-build.sh
-
-  test-build-only:
-    name: test-build-only
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2.3.4
-
-      - name: test build
-        uses: ./
-        with:
-          dockerfile: tests/Dockerfile
-          docker-image: fsouzaci/docker-publish-action-test
-          skip-push: true
-
-  test-build-only-with-tag:
-    name: test-build-only-with-tag
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2.3.4
-
-      - name: test tagging
-        uses: ./
-        with:
-          dockerfile: tests/Dockerfile
-          docker-image: fsouzaci/docker-publish-action-test
-          tag: v1.0.0
-          skip-push: true
-
   test-push:
     name: test-push
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2.3.4
-
       - name: test push
         if: github.event_name == 'push'
         uses: ./

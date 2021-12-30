@@ -10,28 +10,45 @@ inputs:
   docker-password:
     description: "Password to authenticate with Docker Hub"
     required: false
-  skip-push:
-    description: "Whether to skip push (useful for pull-requests, to test the image building process)"
-    required: false
-    default: "false"
   dockerfile:
     description: "Path to the dockerfile (defaults to Dockerfile)"
     required: false
     default: "Dockerfile"
-  tag:
-    description: "Additional tag on top of 'latest'. Can be inferred from git if used on the correct event"
-    required: false
-    default: ""
 
 runs:
   using: "composite"
   steps:
-    - run: ${{ github.action_path }}/docker-build.sh
-      shell: bash
-      env:
-        DOCKERFILE: ${{ inputs.dockerfile }}
-        DOCKER_IMAGE: ${{ inputs.docker-image }}
-        DOCKER_PASSWORD: ${{ inputs.docker-password }}
-        DOCKER_USERNAME: ${{ inputs.docker-username }}
-        SKIP_PUSH: ${{ inputs.skip-push }}
-        TAG: ${{ inputs.tag }}
+    - name: docker meta
+      id: meta
+      uses: docker/metadata-action@v3
+      with:
+        images: ${{ inputs.docker-image }}
+        tags: |
+          type=ref,event=branch
+          type=ref,event=pr
+          type=semver,pattern={{version}}
+          type=semver,pattern={{major}}.{{minor}}
+          type=semver,pattern={{major}}
+
+    - name: setup qemu
+      uses: docker/setup-qemu-action@v1
+
+    - name: setup buildx
+      id: buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: login to docker hub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ inputs.docker-username }}
+        password: ${{ inputs.docker-password }}
+
+    - name: build and push
+      uses: docker/build-push-action@v2
+      with:
+        context: .
+        file: ${{ inputs.dockerfile }}
+        push: true
+        tags: ${{ steps.meta.outputs.tags }}
+        labels: ${{ steps.meta.outputs.labels }}
+        platforms: linux/amd64,linux/arm64
